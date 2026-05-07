@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ДвеПро — Встановлення дверей</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#C8181C;
+  --red-dark:#9B1114;
+  --black:#111111;
+  --gray-dark:#2a2a2a;
+  --gray:#555555;
+  --gray-mid:#888888;
+  --gray-light:#D4D4D4;
+  --gray-pale:#F4F4F4;
+  --white:#FFFFFF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:var(--black);border-bottom:3px solid var(--red)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white);letter-spacing:2px;cursor:pointer}
+.logo span{color:var(--red)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--gray-light);text-decoration:none;font-size:.85rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:color .2s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--red)}
+.nav-cta{background:var(--red);color:var(--white);padding:.5rem 1.2rem;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s}
+.nav-cta:hover{background:var(--red-dark)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{width:25px;height:2px;background:var(--white);transition:.3s}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:64px}
+.page.active{display:block}
+
+/* ===== HOME ===== */
+.hero{position:relative;min-height:calc(100vh - 64px);background:var(--black);display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;opacity:.18}
+.hero-bg svg{width:100%;height:100%}
+.hero-diagonal{position:absolute;right:0;top:0;width:50%;height:100%;background:var(--gray-dark);clip-path:polygon(15% 0,100% 0,100% 100%,0% 100%)}
+.hero-image-block{position:absolute;right:0;top:0;width:48%;height:100%;overflow:hidden}
+.hero-door-img{width:100%;height:100%;object-fit:cover;opacity:.7}
+.door-illustration{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:4rem 2rem;width:100%}
+.hero-tag{display:inline-block;background:var(--red);color:var(--white);font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:.4rem 1rem;margin-bottom:1.5rem}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,7rem);line-height:1;color:var(--white);margin-bottom:1.5rem;max-width:600px}
+.hero-title span{color:var(--red)}
+.hero-sub{color:var(--gray-light);font-size:1.05rem;font-weight:300;max-width:480px;line-height:1.7;margin-bottom:2.5rem}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:var(--white);padding:.85rem 2rem;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;text-decoration:none;display:inline-block}
+.btn-primary:hover{background:var(--red-dark)}
+.btn-outline{background:transparent;color:var(--white);padding:.85rem 2rem;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:2px solid var(--gray-mid);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block}
+.btn-outline:hover{border-color:var(--white);color:var(--white)}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;flex-wrap:wrap}
+.stat-item{text-align:left}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--red);line-height:1}
+.stat-label{font-size:.75rem;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px;margin-top:.3rem}
+
+/* STRIP */
+.strip{background:var(--red);padding:1rem 2rem;overflow:hidden}
+.strip-inner{display:flex;gap:4rem;animation:marquee 20s linear infinite;white-space:nowrap}
+.strip-item{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--white);letter-spacing:2px;display:flex;align-items:center;gap:.8rem}
+.strip-dot{width:8px;height:8px;background:var(--black);border-radius:50%;flex-shrink:0}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* FEATURES */
+.features{padding:6rem 2rem;background:var(--gray-pale)}
+.section-header{max-width:1200px;margin:0 auto 4rem;display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.section-tag{font-size:.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:.5rem}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--black);line-height:1.1}
+.section-sub{font-size:.9rem;color:var(--gray);max-width:400px;line-height:1.7}
+.feat-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px}
+.feat-card{background:var(--white);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:transform .3s}
+.feat-card:hover{transform:translateY(-4px)}
+.feat-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--red)}
+.feat-num{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--gray-pale);position:absolute;top:.5rem;right:1rem;line-height:1}
+.feat-icon{width:48px;height:48px;background:var(--black);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem}
+.feat-icon svg{width:24px;height:24px;fill:none;stroke:var(--white);stroke-width:2}
+.feat-title{font-size:1rem;font-weight:700;margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.5px}
+.feat-desc{font-size:.85rem;color:var(--gray);line-height:1.7}
+
+/* TYPES — home preview */
+.types-preview{padding:6rem 2rem;background:var(--black)}
+.types-grid{max-width:1200px;margin:2rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.type-card{position:relative;height:380px;overflow:hidden;cursor:pointer}
+.type-card-bg{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.type-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.1) 60%);transition:.3s}
+.type-card:hover .type-overlay{background:linear-gradient(to top,rgba(200,24,28,.85) 0%,rgba(0,0,0,.2) 70%)}
+.type-content{position:absolute;bottom:0;left:0;right:0;padding:2rem;z-index:2}
+.type-label{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);letter-spacing:1px;margin-bottom:.4rem}
+.type-desc{font-size:.8rem;color:var(--gray-light);line-height:1.5;opacity:0;transform:translateY(10px);transition:.3s}
+.type-card:hover .type-desc{opacity:1;transform:translateY(0)}
+
+/* PROCESS — home */
+.process{padding:6rem 2rem;background:var(--white)}
+.process-steps{max-width:1200px;margin:2rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;position:relative}
+.process-steps::before{content:'';position:absolute;top:40px;left:10%;right:10%;height:2px;background:var(--gray-light);z-index:0}
+.step{text-align:center;padding:2rem 1.5rem;position:relative;z-index:1}
+.step-circle{width:80px;height:80px;border-radius:50%;background:var(--black);color:var(--white);font-family:'Bebas Neue',sans-serif;font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;border:3px solid var(--black);transition:.3s}
+.step:hover .step-circle{background:var(--red);border-color:var(--red)}
+.step-title{font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem}
+.step-desc{font-size:.8rem;color:var(--gray);line-height:1.6}
+
+/* TESTIMONIALS */
+.testimonials{padding:6rem 2rem;background:var(--black)}
+.testimonials .section-title{color:var(--white)}
+.testimonials .section-tag{color:var(--red)}
+.testi-grid{max-width:1200px;margin:2rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--gray-dark)}
+.testi-card{background:var(--gray-dark);padding:2.5rem 2rem}
+.testi-stars{color:var(--red);font-size:1.1rem;margin-bottom:1rem;letter-spacing:3px}
+.testi-text{font-size:.9rem;color:var(--gray-light);line-height:1.7;font-style:italic;margin-bottom:1.5rem}
+.testi-author{font-size:.8rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:1px}
+.testi-city{font-size:.75rem;color:var(--gray-mid);margin-top:.2rem}
+
+/* CTA BANNER */
+.cta-banner{padding:5rem 2rem;background:var(--red);position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;right:-5%;top:50%;transform:translateY(-50%);width:500px;height:500px;border-radius:50%;border:80px solid rgba(0,0,0,.1)}
+.cta-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;z-index:1}
+.cta-text h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);color:var(--white);line-height:1.1;margin-bottom:.5rem}
+.cta-text p{color:rgba(255,255,255,.85);font-size:.95rem;font-weight:300}
+.btn-white{background:var(--white);color:var(--red);padding:.9rem 2.2rem;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;transition:all .2s}
+.btn-white:hover{background:var(--black);color:var(--white)}
+
+/* ===== SERVICES PAGE ===== */
+.page-hero{padding:6rem 2rem 4rem;background:var(--black);position:relative;overflow:hidden}
+.page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--red)}
+.page-hero-content{max-width:1200px;margin:0 auto}
+.page-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5rem);color:var(--white);line-height:1}
+.page-hero h1 span{color:var(--red)}
+.page-hero p{color:var(--gray-light);font-size:1rem;max-width:600px;line-height:1.7;margin-top:1rem;font-weight:300}
+
+.services-section{padding:5rem 2rem;background:var(--white)}
+.services-list{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1px;background:var(--gray-light)}
+.service-item{background:var(--white);display:grid;grid-template-columns:1fr 2fr 1fr;gap:0;align-items:stretch}
+.service-item:nth-child(even){background:var(--gray-pale)}
+.service-num-block{background:var(--black);display:flex;align-items:center;justify-content:center;padding:2.5rem;min-height:160px}
+.service-num-block span{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--red)}
+.service-body{padding:2.5rem 3rem;border-left:1px solid var(--gray-light);border-right:1px solid var(--gray-light)}
+.service-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:1px;margin-bottom:.5rem}
+.service-desc{font-size:.88rem;color:var(--gray);line-height:1.7;margin-bottom:1rem}
+.service-tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.tag{background:var(--gray-pale);color:var(--gray);font-size:.7rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:.3rem .8rem;border:1px solid var(--gray-light)}
+.service-price-block{padding:2.5rem;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:1rem}
+.price-from{font-size:.7rem;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px}
+.price-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--black)}
+.price-note{font-size:.7rem;color:var(--gray-mid)}
+
+/* GALLERY PAGE */
+.gallery-section{padding:5rem 2rem;background:var(--white)}
+.gallery-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.gallery-item{position:relative;overflow:hidden;cursor:pointer;aspect-ratio:4/3}
+.gallery-item:first-child{grid-column:span 2;aspect-ratio:unset;min-height:300px}
+.gallery-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:.4s}
+.gallery-item:hover .gallery-img{transform:scale(1.05)}
+.gallery-cap{position:absolute;bottom:0;left:0;right:0;background:var(--red);color:var(--white);padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;transform:translateY(100%);transition:.3s}
+.gallery-item:hover .gallery-cap{transform:translateY(0)}
+
+/* ABOUT PAGE */
+.about-grid{max-width:1200px;margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img-block{position:relative}
+.about-img-frame{width:100%;aspect-ratio:3/4;background:var(--black);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.about-badge{position:absolute;bottom:-1rem;right:-1rem;width:140px;height:140px;background:var(--red);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2}
+.about-badge-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--white);line-height:1}
+.about-badge-text{font-size:.65rem;color:rgba(255,255,255,.8);text-align:center;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.about-content{}
+.about-text{font-size:.9rem;color:var(--gray);line-height:1.8;margin-bottom:1.5rem}
+.team-section{padding:5rem 2rem;background:var(--gray-pale)}
+.team-grid{max-width:1200px;margin:2rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;background:var(--gray-light)}
+.team-card{background:var(--white);padding:0}
+.team-img{width:100%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--gray-dark)}
+.team-info{padding:1.5rem}
+.team-name{font-size:.95rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.2rem}
+.team-role{font-size:.75rem;color:var(--red);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:.5rem}
+.team-bio{font-size:.8rem;color:var(--gray);line-height:1.5}
+.certs{padding:5rem 2rem;background:var(--black)}
+.certs-grid{max-width:1200px;margin:2rem auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--gray-dark)}
+.cert-item{background:var(--gray-dark);padding:2rem;text-align:center}
+.cert-icon{width:60px;height:60px;border:2px solid var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.cert-icon svg{width:28px;height:28px;stroke:var(--red);fill:none;stroke-width:2}
+.cert-name{font-size:.8rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:.5px}
+
+/* CONTACT PAGE */
+.contact-layout{max-width:1200px;margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1fr 1.5fr;gap:4rem}
+.contact-info h2{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;margin-bottom:2rem}
+.contact-info h2 span{color:var(--red)}
+.contact-detail{display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem}
+.contact-icon{width:44px;height:44px;background:var(--black);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.contact-icon svg{width:20px;height:20px;stroke:var(--red);fill:none;stroke-width:2}
+.contact-label{font-size:.7rem;color:var(--gray-mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:.2rem}
+.contact-val{font-size:.95rem;font-weight:600}
+.contact-form{background:var(--gray-pale);padding:3rem}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom.5rem;margin-bottom:1.5rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:.4rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:.75rem 1rem;background:var(--white);border:1px solid var(--gray-light);font-family:'Montserrat',sans-serif;font-size:.9rem;color:var(--black);outline:none;transition:border .2s;appearance:none}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--red)}
+.form-group textarea{min-height:120px;resize:vertical}
+.map-section{background:var(--gray-pale);padding:0 2rem 5rem}
+.map-wrap{max-width:1200px;margin:0 auto;height:360px;background:var(--gray-dark);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.map-placeholder{color:var(--gray-mid);font-size:.85rem;text-align:center}
+
+/* FLOATING BUTTON */
+.float-btn{position:fixed;bottom:2rem;left:2rem;z-index:9999;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.float-pulse{width:60px;height:60px;background:var(--red);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;position:relative;box-shadow:0 4px 20px rgba(200,24,28,.4)}
+.float-pulse::after{content:'';position:absolute;inset:-4px;border:2px solid var(--red);animation:pulse 2s ease-in-out infinite;opacity:0}
+@keyframes pulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.4);opacity:0}}
+.float-pulse svg{width:28px;height:28px;stroke:var(--white);fill:none;stroke-width:2}
+.float-label{background:var(--black);color:var(--white);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:.35rem .8rem;white-space:nowrap;pointer-events:none}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:10000;align-items:center;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);width:90%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal-head{background:var(--black);padding:2rem;display:flex;align-items:center;justify-content:space-between}
+.modal-head h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--white)}
+.modal-head h2 span{color:var(--red)}
+.modal-close{width:36px;height:36px;background:var(--gray-dark);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.3rem}
+.modal-body{padding:2rem}
+.modal-body .form-group{margin-bottom:1.2rem}
+.success-msg{display:none;text-align:center;padding:2rem}
+.success-icon{width:70px;height:70px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem}
+.success-icon svg{width:32px;height:32px;stroke:var(--white);fill:none;stroke-width:2.5}
+.success-msg h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:.5rem}
+.success-msg p{font-size:.9rem;color:var(--gray);line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--black);border-top:3px solid var(--red);padding:4rem 2rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);margin-bottom:1rem}
+.footer-logo span{color:var(--red)}
+.footer-about{font-size:.83rem;color:var(--gray-mid);line-height:1.7}
+.footer-title{font-size:.75rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:1px;margin-bottom:1.2rem;padding-bottom:.5rem;border-bottom:1px solid var(--gray-dark)}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-links a{font-size:.83rem;color:var(--gray-mid);text-decoration:none;cursor:pointer;transition:color .2s}
+.footer-links a:hover{color:var(--red)}
+.footer-contact-item{font-size:.83rem;color:var(--gray-mid);margin-bottom:.7rem;display:flex;gap:.5rem;align-items:flex-start}
+.footer-contact-item strong{color:var(--white)}
+.footer-bottom{max-width:1200px;margin:0 auto;padding-top:2rem;border-top:1px solid var(--gray-dark);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-copy{font-size:.78rem;color:var(--gray-mid)}
+.footer-dev{font-size:.78rem;color:var(--gray-dark)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .burger{display:flex}
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--black);padding:1.5rem;flex-direction:column;gap:1rem;border-top:1px solid var(--gray-dark)}
+  .nav-links.open{display:flex}
+  .nav-cta{display:none}
+  .hero-diagonal,.hero-image-block{display:none}
+  .types-grid,.services-list .service-item{grid-template-columns:1fr}
+  .service-num-block{display:none}
+  .service-price-block{align-items:flex-start;padding:0 2.5rem 2.5rem}
+  .about-grid{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .gallery-item:first-child{grid-column:span 1}
+  .form-row{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo" onclick="showPage('home')">ДвеPro<span>.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a onclick="showPage('home')" class="active" data-page="home">Головна</a></li>
+      <li><a onclick="showPage('services')" data-page="services">Послуги</a></li>
+      <li><a onclick="showPage('gallery')" data-page="gallery">Галерея</a></li>
+      <li><a onclick="showPage('about')" data-page="about">Про нас</a></li>
+      <li><a onclick="showPage('contact')" data-page="contact">Контакти</a></li>
+    </ul>
+    <button class="nav-cta" onclick="openModal()">Замовити заміри</button>
+    <div class="burger" id="burger" onclick="toggleBurger()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HOME PAGE ===== -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-bg">
+      <svg viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M 60 0 L 0 0 0 60" fill="none" stroke="#fff" stroke-width="0.5"/></pattern>
+        <rect width="1200" height="700" fill="url(#grid)"/>
+      </svg>
+    </div>
+    <div class="hero-image-block">
+      <div class="door-illustration">
+        <svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg" style="width:320px;opacity:.6">
+          <rect x="60" y="50" width="280" height="500" rx="2" fill="#1a1a1a" stroke="#C8181C" stroke-width="3"/>
+          <rect x="80" y="70" width="240" height="460" rx="1" fill="#222"/>
+          <rect x="95" y="85" width="100" height="180" rx="1" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+          <rect x="205" y="85" width="100" height="180" rx="1" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+          <rect x="95" y="280" width="100" height="240" rx="1" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+          <rect x="205" y="280" width="100" height="240" rx="1" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+          <circle cx="300" cy="390" r="10" fill="#C8181C"/>
+          <rect x="294" y="385" width="20" height="10" rx="5" fill="#C8181C"/>
+          <rect x="60" y="545" width="280" height="15" rx="1" fill="#111"/>
+          <line x1="200" y1="70" x2="200" y2="530" stroke="#333" stroke-width="2"/>
+          <rect x="55" y="45" width="290" height="15" rx="1" fill="#111"/>
+        </svg>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-tag">№1 у вашому місті</div>
+      <h1 class="hero-title">Двері<br>вашої<br><span>мрії</span></h1>
+      <p class="hero-sub">Професійне встановлення вхідних та міжкімнатних дверей. Гарантія якості, точні заміри, чистота після монтажу.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openModal()">Замовити заміри безкоштовно</button>
+        <button class="btn-outline" onclick="showPage('gallery')">Переглянути роботи</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">1200+</div><div class="stat-label">встановлених дверей</div></div>
+        <div class="stat-item"><div class="stat-num">8</div><div class="stat-label">років досвіду</div></div>
+        <div class="stat-item"><div class="stat-num">98%</div><div class="stat-label">задоволених клієнтів</div></div>
+        <div class="stat-item"><div class="stat-num">24ч</div><div class="stat-label">виїзд на заміри</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-inner">
+      <span class="strip-item"><span class="strip-dot"></span>ВХІДНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>МІЖКІМНАТНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>ПРОТИПОЖЕЖНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>БРОНЬОВАНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>СКЛОПАКЕТИ</span>
+      <span class="strip-item"><span class="strip-dot"></span>ЗАМКИ ТА ПЕТЛІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>ВХІДНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>МІЖКІМНАТНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>ПРОТИПОЖЕЖНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>БРОНЬОВАНІ ДВЕРІ</span>
+      <span class="strip-item"><span class="strip-dot"></span>СКЛОПАКЕТИ</span>
+      <span class="strip-item"><span class="strip-dot"></span>ЗАМКИ ТА ПЕТЛІ</span>
+    </div>
+  </div>
+
+  <section class="features">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">Чому обирають нас</div>
+        <h2 class="section-title">Переваги<br>роботи з нами</h2>
+      </div>
+      <p class="section-sub">Ми цінуємо ваш час та довіру. Кожен проєкт виконуємо з максимальною відповідальністю та увагою до деталей.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <span class="feat-num">01</span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="feat-title">Безкоштовні заміри</div>
+        <p class="feat-desc">Виїжджаємо до вас протягом 24 годин. Майстер точно виміряє всі параметри і порадить оптимальне рішення без зайвих витрат.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-num">02</span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
+        <div class="feat-title">Гарантія 5 років</div>
+        <p class="feat-desc">На всі види робіт надаємо офіційну гарантію 5 років. Усі дефекти усуваємо безкоштовно у встановлені терміни.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-num">03</span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="feat-title">Сертифіковані матеріали</div>
+        <p class="feat-desc">Співпрацюємо лише з перевіреними виробниками. Всі матеріали мають сертифікати якості та відповідають стандартам ДСТУ.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-num">04</span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+        <div class="feat-title">Монтаж за 1 день</div>
+        <p class="feat-desc">Встановлюємо двері в день замовлення або у зручний для вас час. Не затримуємо клієнта і завжди дотримуємось дедлайнів.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-num">05</span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+        <div class="feat-title">Чистота після робіт</div>
+        <p class="feat-desc">Після монтажу прибираємо будівельне сміття та протираємо поверхні. Ваш будинок залишається чистим — це наш стандарт.</p>
+      </div>
+      <div class="feat-card">
+        <span class="feat-num">06</span>
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+        <div class="feat-title">Гнучка оплата</div>
+        <p class="feat-desc">Приймаємо оплату готівкою, карткою та безготівково. Можливість оплати частинами — 50% після замірів, 50% після монтажу.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="types-preview">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">Наші роботи</div>
+        <h2 class="section-title" style="color:var(--white)">Типи дверей<br>що ми встановлюємо</h2>
+      </div>
+    </div>
+    <div class="types-grid">
+      <div class="type-card">
+        <div class="type-card-bg" style="background:#1a1a1a">
+          <svg viewBox="0 0 200 300" width="140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="160" height="260" rx="2" fill="#222" stroke="#C8181C" stroke-width="3"/>
+            <rect x="35" y="35" width="130" height="230" fill="#2a2a2a"/>
+            <rect x="45" y="45" width="50" height="100" fill="#333" stroke="#444"/>
+            <rect x="105" y="45" width="50" height="100" fill="#333" stroke="#444"/>
+            <rect x="45" y="160" width="50" height="95" fill="#333" stroke="#444"/>
+            <rect x="105" y="160" width="50" height="95" fill="#333" stroke="#444"/>
+            <circle cx="148" cy="195" r="8" fill="#C8181C"/>
+            <line x1="100" y1="35" x2="100" y2="265" stroke="#444" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="type-overlay"></div>
+        <div class="type-content">
+          <div class="type-label">Вхідні двері</div>
+          <p class="type-desc">Сталеві та бронедвері для квартир і приватних будинків. Надійний захист вашого житла.</p>
+        </div>
+      </div>
+      <div class="type-card">
+        <div class="type-card-bg" style="background:#111">
+          <svg viewBox="0 0 160 280" width="120" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="15" width="130" height="250" rx="2" fill="#1e1e1e" stroke="#888" stroke-width="2"/>
+            <rect x="25" y="25" width="110" height="230" fill="#252525"/>
+            <rect x="35" y="35" width="40" height="180" fill="rgba(150,200,255,0.15)" stroke="#444"/>
+            <rect x="85" y="35" width="40" height="180" fill="#2a2a2a" stroke="#444"/>
+            <line x1="80" y1="25" x2="80" y2="255" stroke="#444" stroke-width="1.5"/>
+            <circle cx="120" cy="165" r="6" fill="#888"/>
+          </svg>
+        </div>
+        <div class="type-overlay"></div>
+        <div class="type-content">
+          <div class="type-label">Міжкімнатні</div>
+          <p class="type-desc">Дерев'яні, МДФ та скляні двері для будь-якого інтер'єру. Широкий вибір кольорів і фактур.</p>
+        </div>
+      </div>
+      <div class="type-card">
+        <div class="type-card-bg" style="background:#141414">
+          <svg viewBox="0 0 200 280" width="160" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="180" height="260" rx="2" fill="#1a1a1a" stroke="#C8181C" stroke-width="4"/>
+            <rect x="22" y="22" width="156" height="236" fill="#222"/>
+            <rect x="30" y="30" width="140" height="60" fill="#2a2a2a" stroke="#333"/>
+            <rect x="30" y="100" width="60" height="148" fill="#2a2a2a" stroke="#333"/>
+            <rect x="100" y="100" width="70" height="148" fill="#2a2a2a" stroke="#333"/>
+            <text x="100" y="75" text-anchor="middle" fill="#C8181C" font-size="12" font-family="Arial" font-weight="bold">FIRE DOOR</text>
+            <circle cx="158" cy="185" r="9" fill="#C8181C"/>
+          </svg>
+        </div>
+        <div class="type-overlay"></div>
+        <div class="type-content">
+          <div class="type-label">Протипожежні</div>
+          <p class="type-desc">Сертифіковані двері EI30, EI60, EI90 для житлових та комерційних об'єктів.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="section-header">
+      <div>
+        <div class="section-tag">Як ми працюємо</div>
+        <h2 class="section-title">Простий процес<br>замовлення</h2>
+      </div>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-circle">1</div>
+        <div class="step-title">Заявка</div>
+        <p class="step-desc">Залишаєте заявку онлайн або телефонуєте нам. Менеджер відповість протягом 15 хвилин.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">2</div>
+        <div class="step-title">Замір</div>
+        <p class="step-desc">Майстер виїжджає на безкоштовний замір у зручний для вас час — навіть у вихідні дні.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">3</div>
+        <div class="step-title">Підбір</div>
+        <p class="step-desc">Разом обираємо модель, колір, фурнітуру і фіксуємо ціну. Ніяких прихованих доплат.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">4</div>
+        <div class="step-title">Монтаж</div>
+        <p class="step-desc">Кваліфіковані монтажники встановлюють двері в узгоджений термін. Чисто і точно.</p>
+      </div>
+      <div class="step">
+        <div class="step-circle">5</div>
+        <div class="step-title">Гарантія</div>
+        <p class="step-desc">Підписуємо гарантійний документ. Підтримка 5 років — ми завжди на зв'язку для вас.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="section-header" style="max-width:1200px;margin-left:auto;margin-right:auto">
+      <div>
+        <div class="section-tag">Відгуки клієнтів</div>
+        <h2 class="section-title">Що говорять<br>наші клієнти</h2>
+      </div>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Замовляли вхідні двері. Приїхали на замір наступного дня, встановили за 4 години. Якість відмінна, двері закриваються ідеально. Дуже задоволені!"</p>
+        <div class="testi-author">Олена Коваленко</div>
+        <div class="testi-city">Київ, ЖК Comfort Town</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Встановили 7 міжкімнатних дверей при ремонті. Команда професійна, чисто після роботи. Порадили хорошу модель в межах бюджету. Рекомендую!"</p>
+        <div class="testi-author">Максим Пилипенко</div>
+        <div class="testi-city">Харків, вул. Культури</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Звернулися після того як попередні майстри зробили криво. ДвеПро виправили все бездоганно. Тепер і батькам порекомендували — теж задоволені."</p>
+        <div class="testi-author">Наталія Ткаченко</div>
+        <div class="testi-city">Дніпро, Соборний р-н</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Отримайте безкоштовний замір<br>вже сьогодні!</h2>
+        <p>Наш майстер виїде у зручний для вас час та надасть точний розрахунок вартості.</p>
+      </div>
+      <button class="btn-white" onclick="openModal()">Замовити безкоштовно →</button>
+    </div>
+  </section>
+</div>
+
+<!-- ===== SERVICES PAGE ===== -->
+<div class="page" id="page-services">
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="hero-tag">Наші послуги</div>
+      <h1>Повний спектр<br><span>дверних робіт</span></h1>
+      <p>Від заміру до встановлення — виконуємо всі роботи під ключ. Матеріали, фурнітура, монтаж, регулювання та гарантія включені.</p>
+    </div>
+  </section>
+  <section class="services-section">
+    <div class="services-list">
+      <div class="service-item">
+        <div class="service-num-block"><span>01</span></div>
+        <div class="service-body">
+          <div class="service-name">Встановлення вхідних дверей</div>
+          <p class="service-desc">Монтаж металевих, бронедверей та дверей із склопакетами для квартир, офісів і приватних будинків. Включає підготовку прорізу, встановлення коробки, навішування полотна та регулювання петель. Встановлюємо будь-які замки та ручки на вибір клієнта.</p>
+          <div class="service-tags"><span class="tag">Квартира</span><span class="tag">Приватний будинок</span><span class="tag">Офіс</span><span class="tag">Броньовані</span></div>
+        </div>
+        <div class="service-price-block"><span class="price-from">від</span><span class="price-val">1 800 ₴</span><span class="price-note">монтаж під ключ</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-num-block"><span>02</span></div>
+        <div class="service-body">
+          <div class="service-name">Міжкімнатні двері</div>
+          <p class="service-desc">Встановлення дерев'яних, МДФ, скляних та комбінованих дверей. Розсувні, маятникові, розпашні та системи «купе». Підбираємо моделі під будь-який стиль інтер'єру та бюджет. Встановлюємо наличники та добірні планки.</p>
+          <div class="service-tags"><span class="tag">МДФ</span><span class="tag">Масив</span><span class="tag">Скляні</span><span class="tag">Купе</span></div>
+        </div>
+        <div class="service-price-block"><span class="price-from">від</span><span class="price-val">1 200 ₴</span><span class="price-note">за одне полотно</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-num-block"><span>03</span></div>
+        <div class="service-body">
+          <div class="service-name">Протипожежні двері</div>
+          <p class="service-desc">Монтаж сертифікованих протипожежних дверей класу EI30, EI60, EI90 для житлових комплексів, торгових центрів, готелів та підприємств. Всі роботи виконуються згідно норм ДБН та вимог ДСНС. Надаємо акт виконаних робіт та сертифікат.</p>
+          <div class="service-tags"><span class="tag">EI30</span><span class="tag">EI60</span><span class="tag">EI90</span><span class="tag">Комерція</span></div>
+        </div>
+        <div class="service-price-block"><span class="price-from">від</span><span class="price-val">4 500 ₴</span><span class="price-note">під ключ</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-num-block"><span>04</span></div>
+        <div class="service-body">
+          <div class="service-name">Заміна та регулювання</div>
+          <p class="service-desc">Регулювання петель, замків та ущільнювачів. Заміна окремих елементів без повного демонтажу полотна. Усунення скрипу, провисання, продувів. Ремонт замкових механізмів і циліндрів. Виїзд майстра в день звернення.</p>
+          <div class="service-tags"><span class="tag">Регулювання</span><span class="tag">Ремонт</span><span class="tag">Заміна замку</span></div>
+        </div>
+        <div class="service-price-block"><span class="price-from">від</span><span class="price-val">400 ₴</span><span class="price-note">за виклик</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-num-block"><span>05</span></div>
+        <div class="service-body">
+          <div class="service-name">Підготовка прорізу</div>
+          <p class="service-desc">Розширення або звуження дверного прорізу, вирівнювання стін, закладення старого прорізу. Роботи по бетону, цеглі, газоблоку. Підготовка під будь-який тип дверей. Розраховуємо вартість після огляду об'єкта.</p>
+          <div class="service-tags"><span class="tag">Бетон</span><span class="tag">Цегла</span><span class="tag">Газоблок</span><span class="tag">Розширення</span></div>
+        </div>
+        <div class="service-price-block"><span class="price-from">від</span><span class="price-val">2 200 ₴</span><span class="price-note">за проріз</span></div>
+      </div>
+      <div class="service-item">
+        <div class="service-num-block"><span>06</span></div>
+        <div class="service-body">
+          <div class="service-name">Встановлення фурнітури</div>
+          <p class="service-desc">Встановлення дверних ручок, петель, замків, глазків, ланцюжків, засувів та магнітних замків. Монтаж сучасних смарт-замків та домофонів. Замір і підбір фурнітури у вашому стилі, доставка в день монтажу.</p>
+          <div class="service-tags"><span class="tag">Ручки</span><span class="tag">Замки</span><span class="tag">Смарт-замки</span><span class="tag">Домофон</span></div>
+        </div>
+        <div class="service-price-block"><span class="price-from">від</span><span class="price-val">300 ₴</span><span class="price-note">за елемент</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="cta-banner">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Не знаєте з чого почати?<br>Ми допоможемо!</h2>
+        <p>Безкоштовна консультація та виїзд на замір у зручний для вас час.</p>
+      </div>
+      <button class="btn-white" onclick="openModal()">Замовити консультацію →</button>
+    </div>
+  </section>
+</div>
+
+<!-- ===== GALLERY PAGE ===== -->
+<div class="page" id="page-gallery">
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="hero-tag">Наші роботи</div>
+      <h1>Галерея<br><span>виконаних проєктів</span></h1>
+      <p>Понад 1200 встановлених дверей. Кожен проєкт — індивідуальний підхід та гарантована якість.</p>
+    </div>
+  </section>
+  <section class="gallery-section">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:#1a1a1a;min-height:300px">
+          <svg viewBox="0 0 360 300" width="280" xmlns="http://www.w3.org/2000/svg">
+            <rect width="360" height="300" fill="#1a1a1a"/>
+            <rect x="40" y="20" width="280" height="260" rx="2" fill="#222" stroke="#C8181C" stroke-width="3"/>
+            <rect x="55" y="35" width="120" height="220" fill="#2a2a2a" stroke="#333"/>
+            <rect x="185" y="35" width="120" height="220" fill="#2a2a2a" stroke="#333"/>
+            <rect x="65" y="45" width="100" height="80" fill="#333" stroke="#444"/>
+            <rect x="65" y="135" width="100" height="110" fill="#333" stroke="#444"/>
+            <rect x="195" y="45" width="100" height="80" fill="#333" stroke="#444"/>
+            <rect x="195" y="135" width="100" height="110" fill="#333" stroke="#444"/>
+            <circle cx="265" cy="195" r="10" fill="#C8181C"/>
+            <circle cx="90" cy="195" r="10" fill="#888"/>
+          </svg>
+        </div>
+        <div class="gallery-overlay"></div>
+        <div class="gallery-cap">Подвійні вхідні двері — ЖК Panorama</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:#111">
+          <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#111"/>
+            <rect x="25" y="15" width="150" height="170" rx="2" fill="#1e1e1e" stroke="#888" stroke-width="2"/>
+            <rect x="35" y="25" width="130" height="150" fill="#252525"/>
+            <rect x="45" y="35" width="55" height="130" fill="rgba(180,220,255,0.12)" stroke="#444"/>
+            <rect x="110" y="35" width="45" height="130" fill="#2a2a2a" stroke="#444"/>
+            <line x1="105" y1="25" x2="105" y2="175" stroke="#444" stroke-width="1.5"/>
+            <circle cx="140" cy="115" r="7" fill="#888"/>
+          </svg>
+        </div>
+        <div class="gallery-cap">Скляна міжкімнатна — ЖК City Park</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:#1c1c1c">
+          <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1c1c1c"/>
+            <rect x="30" y="20" width="140" height="160" rx="2" fill="#222" stroke="#C8181C" stroke-width="3"/>
+            <rect x="42" y="32" width="116" height="136" fill="#2a2a2a"/>
+            <rect x="52" y="42" width="96" height="55" fill="#333" stroke="#444"/>
+            <rect x="52" y="107" width="44" height="51" fill="#333" stroke="#444"/>
+            <rect x="106" y="107" width="42" height="51" fill="#333" stroke="#444"/>
+            <text x="100" y="77" text-anchor="middle" fill="#C8181C" font-size="9" font-family="Arial" font-weight="bold">FIRE EI60</text>
+            <circle cx="152" cy="148" r="8" fill="#C8181C"/>
+          </svg>
+        </div>
+        <div class="gallery-cap">Протипожежні EI60 — ТРЦ Gorodok</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:#171717">
+          <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#171717"/>
+            <rect x="20" y="15" width="75" height="170" rx="2" fill="#222" stroke="#555" stroke-width="2"/>
+            <rect x="105" y="15" width="75" height="170" rx="2" fill="#222" stroke="#555" stroke-width="2"/>
+            <rect x="30" y="25" width="55" height="150" fill="#2a2a2a"/>
+            <rect x="115" y="25" width="55" height="150" fill="#2a2a2a"/>
+            <rect x="38" y="35" width="39" height="60" fill="#333"/>
+            <rect x="38" y="105" width="39" height="60" fill="#333"/>
+            <rect x="123" y="35" width="39" height="60" fill="#333"/>
+            <rect x="123" y="105" width="39" height="60" fill="#333"/>
+            <circle cx="58" cy="130" r="6" fill="#888"/>
+            <circle cx="143" cy="130" r="6" fill="#888"/>
+          </svg>
+        </div>
+        <div class="gallery-cap">Подвійні міжкімнатні — Котедж Irpin</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:#0f0f0f">
+          <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#0f0f0f"/>
+            <rect x="30" y="20" width="140" height="165" rx="2" fill="#1a1a1a" stroke="#C8181C" stroke-width="4"/>
+            <rect x="42" y="32" width="116" height="141" fill="#222"/>
+            <rect x="52" y="42" width="50" height="50" fill="rgba(200,24,28,0.15)" stroke="#C8181C" stroke-width="1"/>
+            <rect x="112" y="42" width="36" height="50" fill="rgba(200,24,28,0.15)" stroke="#C8181C" stroke-width="1"/>
+            <rect x="52" y="102" width="96" height="61" fill="#2a2a2a" stroke="#444"/>
+            <circle cx="152" cy="148" r="10" fill="#gold"/><circle cx="152" cy="148" r="10" fill="#C8181C"/>
+            <text x="100" y="80" text-anchor="middle" fill="#C8181C" font-size="8" font-family="Arial" font-weight="bold">БРОНЬОВАНІ</text>
+          </svg>
+        </div>
+        <div class="gallery-cap">Броньовані вхідні — Приватний будинок</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img" style="background:#161616">
+          <svg viewBox="0 0 200 200" width="160" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#161616"/>
+            <rect x="25" y="20" width="150" height="160" rx="2" fill="#1e1e1e" stroke="#777" stroke-width="2"/>
+            <rect x="35" y="30" width="130" height="140" fill="#252525"/>
+            <line x1="100" y1="30" x2="100" y2="170" stroke="#333" stroke-width="2"/>
+            <rect x="45" y="40" width="45" height="120" fill="rgba(200,230,255,0.08)" stroke="#444"/>
+            <rect x="110" y="40" width="45" height="120" fill="rgba(200,230,255,0.08)" stroke="#444"/>
+            <circle cx="95" cy="105" r="6" fill="#888"/>
+            <circle cx="105" cy="105" r="6" fill="#888"/>
+          </svg>
+        </div>
+        <div class="gallery-cap">Скляні розсувні — Офіс IT компанії</div>
+      </div>
+    </div>
+  </section>
+  <section class="cta-banner">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Хочете таку ж якість?<br>Замовте заміри зараз!</h2>
+        <p>Безкоштовний виїзд майстра та точний розрахунок вартості.</p>
+      </div>
+      <button class="btn-white" onclick="openModal()">Замовити безкоштовно →</button>
+    </div>
+  </section>
+</div>
+
+<!-- ===== ABOUT PAGE ===== -->
+<div class="page" id="page-about">
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="hero-tag">Про компанію</div>
+      <h1>ДвеПро —<br><span>команда майстрів</span></h1>
+      <p>Понад 8 років ми допомагаємо людям обрати та встановити двері своєї мрії. Якість, чесність, відповідальність.</p>
+    </div>
+  </section>
+  <div class="about-grid">
+    <div class="about-img-block">
+      <div class="about-img-frame">
+        <svg viewBox="0 0 300 400" width="260" xmlns="http://www.w3.org/2000/svg">
+          <rect width="300" height="400" fill="#1a1a1a"/>
+          <rect x="40" y="30" width="220" height="340" rx="2" fill="#222" stroke="#C8181C" stroke-width="3"/>
+          <rect x="60" y="50" width="80" height="140" fill="#2a2a2a" stroke="#333"/>
+          <rect x="155" y="50" width="80" height="140" fill="#2a2a2a" stroke="#333"/>
+          <rect x="60" y="205" width="80" height="140" fill="#2a2a2a" stroke="#333"/>
+          <rect x="155" y="205" width="80" height="140" fill="#2a2a2a" stroke="#333"/>
+          <circle cx="220" cy="280" r="12" fill="#C8181C"/>
+          <line x1="150" y1="50" x2="150" y2="345" stroke="#444" stroke-width="2"/>
+          <rect x="50" y="20" width="200" height="15" fill="#111"/>
+          <rect x="40" y="360" width="220" height="15" fill="#111"/>
+        </svg>
+      </div>
+      <div class="about-badge">
+        <div class="about-badge-num">8</div>
+        <div class="about-badge-text">років на<br>ринку</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-tag">Наша історія</div>
+      <h2 class="section-title" style="margin-bottom:1.5rem">Починали вдвох.<br>Тепер нас 24.</h2>
+      <p class="about-text">ДвеПро засновано у 2016 році двома майстрами, які вирішили що якість монтажу дверей в Україні може бути кращою. Ми почали з простих замін дверей у квартирах і поступово виросли до компанії, що виконує великі комерційні проєкти.</p>
+      <p class="about-text">Сьогодні в нашій команді 24 фахівці: монтажники, заміряльники, менеджери та технологи. Ми маємо власний склад і шоурум, де клієнти можуть особисто оцінити якість матеріалів.</p>
+      <p class="about-text">Наша філософія проста: робити так, як для себе. Без поспіху, без компромісів з якістю, з повагою до клієнта та його часу.</p>
+      <div class="hero-stats" style="margin-top:2rem">
+        <div class="stat-item"><div class="stat-num" style="color:var(--red)">1200+</div><div class="stat-label">проєктів</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--red)">24</div><div class="stat-label">майстри</div></div>
+        <div class="stat-item"><div class="stat-num" style="color:var(--red)">5</div><div class="stat-label">міст України</div></div>
+      </div>
+    </div>
+  </div>
+  <section class="team-section">
+    <div class="section-header" style="max-width:1200px;margin:0 auto 2rem">
+      <div>
+        <div class="section-tag">Команда</div>
+        <h2 class="section-title">Наші фахівці</h2>
+      </div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-img">
+          <svg viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#222"/>
+            <circle cx="100" cy="75" r="40" fill="#333"/>
+            <ellipse cx="100" cy="170" rx="60" ry="40" fill="#333"/>
+            <circle cx="100" cy="72" r="28" fill="#444"/>
+            <circle cx="100" cy="68" r="18" fill="#555"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Василь Дмитренко</div>
+          <div class="team-role">Засновник & Головний майстер</div>
+          <p class="team-bio">18 років досвіду монтажних робіт. Особисто контролює складні проєкти.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img">
+          <svg viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1e1e1e"/>
+            <circle cx="100" cy="75" r="40" fill="#2a2a2a"/>
+            <ellipse cx="100" cy="170" rx="60" ry="40" fill="#2a2a2a"/>
+            <circle cx="100" cy="72" r="28" fill="#383838"/>
+            <circle cx="100" cy="68" r="18" fill="#444"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Олексій Романенко</div>
+          <div class="team-role">Технолог & Co-засновник</div>
+          <p class="team-bio">Відповідає за якість матеріалів та стандарти монтажу. Розробив внутрішній регламент компанії.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img">
+          <svg viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1a1a1a"/>
+            <circle cx="100" cy="75" r="40" fill="#252525"/>
+            <ellipse cx="100" cy="170" rx="60" ry="40" fill="#252525"/>
+            <circle cx="100" cy="72" r="28" fill="#333"/>
+            <circle cx="100" cy="68" r="18" fill="#3d3d3d"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Марина Левченко</div>
+          <div class="team-role">Керівник відділу продажів</div>
+          <p class="team-bio">7 років у сфері будівельних матеріалів. Допоможе підібрати оптимальне рішення для вашого бюджету.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img">
+          <svg viewBox="0 0 200 200" width="200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#1c1c1c"/>
+            <circle cx="100" cy="75" r="40" fill="#282828"/>
+            <ellipse cx="100" cy="170" rx="60" ry="40" fill="#282828"/>
+            <circle cx="100" cy="72" r="28" fill="#353535"/>
+            <circle cx="100" cy="68" r="18" fill="#404040"/>
+          </svg>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Сергій Бондаренко</div>
+          <div class="team-role">Старший монтажник</div>
+          <p class="team-bio">Спеціалізація — протипожежні та броньовані двері. 12 років практики, 400+ встановлених дверей.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="certs">
+    <div class="section-header" style="max-width:1200px;margin:0 auto 2rem">
+      <div>
+        <div class="section-tag">Документи</div>
+        <h2 class="section-title" style="color:var(--white)">Сертифікати<br>та ліцензії</h2>
+      </div>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-item">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg></div>
+        <div class="cert-name">ISO 9001:2015<br>Управління якістю</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="cert-name">Ліцензія ДСНС<br>Протипожежні роботи</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="cert-name">Свідоцтво СРО<br>Будівельні роботи</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg></div>
+        <div class="cert-name">ДСТУ Б.В.1.1-24<br>Сертифікат відповідності</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ===== CONTACT PAGE ===== -->
+<div class="page" id="page-contact">
+  <section class="page-hero">
+    <div class="page-hero-content">
+      <div class="hero-tag">Зв'яжіться з нами</div>
+      <h1>Готові<br><span>відповісти</span></h1>
+      <p>Зателефонуйте, напишіть або залиште заявку — ми відповімо протягом 15 хвилин у робочий час.</p>
+    </div>
+  </section>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h2>Контактна<br><span>інформація</span></h2>
+      <div class="contact-detail">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.84 10.7a19.79 19.79 0 01-3.07-8.67A2 2 0 012.75 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.72a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+        <div><div class="contact-label">Телефон</div><div class="contact-val">+380 (44) 123-45-67</div><div class="contact-val">+380 (67) 987-65-43</div></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><div class="contact-label">Email</div><div class="contact-val">info@dvepro.ua</div><div class="contact-val">zamiry@dvepro.ua</div></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><div class="contact-label">Адреса шоуруму</div><div class="contact-val">вул. Хрещатик, 22, оф. 14</div><div style="font-size:.8rem;color:var(--gray)">м. Київ, 10 хв від ст. метро</div></div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+        <div><div class="contact-label">Графік роботи</div><div class="contact-val">Пн–Пт: 9:00 – 19:00</div><div class="contact-val">Сб–Нд: 10:00 – 17:00</div></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-title">Написати нам</div>
+      <div id="contactFormWrap">
+        <div class="form-row">
+          <div class="form-group"><label>Ваше ім'я</label><input type="text" placeholder="Іван Петренко" id="cf-name"></div>
+          <div class="form-group"><label>Телефон</label><input type="tel" placeholder="+380 XX XXX XX XX" id="cf-phone"></div>
+        </div>
+        <div class="form-group"><label>Тема звернення</label>
+          <select id="cf-subject">
+            <option value="">Оберіть тему</option>
+            <option>Замовити заміри</option>
+            <option>Вхідні двері</option>
+            <option>Міжкімнатні двері</option>
+            <option>Протипожежні двері</option>
+            <option>Ремонт та регулювання</option>
+            <option>Інше питання</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Повідомлення</label><textarea placeholder="Опишіть вашу ситуацію або запитання..." id="cf-msg"></textarea></div>
+        <button class="btn-primary" style="width:100%;padding:1rem" onclick="submitContactForm()">Надіслати повідомлення →</button>
+      </div>
+      <div class="success-msg" id="contactSuccess">
+        <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+        <h3>Повідомлення надіслано!</h3>
+        <p>Ми отримали ваше звернення і зв'яжемося з вами протягом 15 хвилин у робочий час.</p>
+      </div>
+    </div>
+  </div>
+  <section class="map-section">
+    <div class="map-wrap">
+      <svg viewBox="0 0 800 360" width="100%" xmlns="http://www.w3.org/2000/svg" style="position:absolute;inset:0;opacity:.3">
+        <pattern id="mapgrid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#555" stroke-width="0.5"/></pattern>
+        <rect width="800" height="360" fill="#1a1a1a"/>
+        <rect width="800" height="360" fill="url(#mapgrid)"/>
+        <line x1="0" y1="180" x2="800" y2="180" stroke="#666" stroke-width="2"/>
+        <line x1="400" y1="0" x2="400" y2="360" stroke="#666" stroke-width="2"/>
+        <line x1="0" y1="120" x2="800" y2="120" stroke="#444" stroke-width="1"/>
+        <line x1="0" y1="240" x2="800" y2="240" stroke="#444" stroke-width="1"/>
+        <line x1="200" y1="0" x2="200" y2="360" stroke="#444" stroke-width="1"/>
+        <line x1="600" y1="0" x2="600" y2="360" stroke="#444" stroke-width="1"/>
+        <rect x="300" y="120" width="200" height="120" fill="#222" stroke="#555" stroke-width="1"/>
+        <rect x="180" y="80" width="100" height="50" fill="#222" stroke="#444"/>
+        <rect x="520" y="80" width="120" height="60" fill="#222" stroke="#444"/>
+        <rect x="160" y="200" width="80" height="80" fill="#222" stroke="#444"/>
+        <rect x="560" y="200" width="90" height="70" fill="#222" stroke="#444"/>
+        <circle cx="400" cy="180" r="14" fill="#C8181C"/>
+        <circle cx="400" cy="180" r="6" fill="white"/>
+        <circle cx="400" cy="180" r="20" fill="none" stroke="#C8181C" stroke-width="2" opacity=".5"/>
+      </svg>
+      <div class="map-placeholder" style="position:relative;z-index:1">
+        <svg viewBox="0 0 24 24" width="48" style="stroke:#C8181C;fill:none;stroke-width:2;display:block;margin:0 auto 1rem"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <strong style="color:var(--white);font-size:1rem;display:block;margin-bottom:.3rem">ДвеПро Шоурум</strong>
+        <span>вул. Хрещатик, 22 — м. Київ</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FLOATING BUTTON -->
+<div class="float-btn">
+  <div class="float-label">Замовити заміри</div>
+  <div class="float-pulse" onclick="openModal()">
+    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOut(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Замовити <span>заміри</span></h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="modalForm">
+        <div class="form-group"><label>Ваше ім'я *</label><input type="text" id="m-name" placeholder="Іван Петренко"></div>
+        <div class="form-group"><label>Телефон *</label><input type="tel" id="m-phone" placeholder="+380 XX XXX XX XX"></div>
+        <div class="form-group"><label>Адреса об'єкта</label><input type="text" id="m-addr" placeholder="м. Київ, вул. Шевченка, 10, кв. 5"></div>
+        <div class="form-group"><label>Тип дверей</label>
+          <select id="m-type">
+            <option value="">Оберіть тип</option>
+            <option>Вхідні (квартира)</option>
+            <option>Вхідні (приватний будинок)</option>
+            <option>Міжкімнатні</option>
+            <option>Протипожежні</option>
+            <option>Не визначився</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Зручний час для дзвінка</label>
+          <select id="m-time">
+            <option>Зателефонуйте мені якнайшвидше</option>
+            <option>Ранок (9:00–12:00)</option>
+            <option>День (12:00–16:00)</option>
+            <option>Вечір (16:00–19:00)</option>
+          </select>
+        </div>
+        <button class="btn-primary" style="width:100%;padding:1rem;margin-top:.5rem" onclick="submitModal()">Замовити безкоштовні заміри →</button>
+        <p style="font-size:.75rem;color:var(--gray-mid);text-align:center;margin-top:.8rem">Натискаючи кнопку, ви погоджуєтесь з обробкою персональних даних</p>
+      </div>
+      <div class="success-msg" id="modalSuccess">
+        <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg></div>
+        <h3>Заявку прийнято!</h3>
+        <p>Наш менеджер зателефонує вам найближчим часом для уточнення деталей і призначення зручного часу виїзду.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">ДвеPro<span>.</span></div>
+      <p class="footer-about">Професійне встановлення дверей будь-якої складності. Безкоштовні заміри, гарантія 5 років, монтаж за 1 день. Ваш надійний партнер у виборі та монтажі дверей.</p>
+    </div>
+    <div>
+      <div class="footer-title">Послуги</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('services')">Вхідні двері</a></li>
+        <li><a onclick="showPage('services')">Міжкімнатні двері</a></li>
+        <li><a onclick="showPage('services')">Протипожежні двері</a></li>
+        <li><a onclick="showPage('services')">Броньовані двері</a></li>
+        <li><a onclick="showPage('services')">Ремонт та регулювання</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">Компанія</div>
+      <ul class="footer-links">
+        <li><a onclick="showPage('about')">Про нас</a></li>
+        <li><a onclick="showPage('gallery')">Галерея робіт</a></li>
+        <li><a onclick="showPage('about')">Команда</a></li>
+        <li><a onclick="showPage('about')">Сертифікати</a></li>
+        <li><a onclick="showPage('contact')">Контакти</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-title">Контакти</div>
+      <div class="footer-contact-item"><strong>+380 (44) 123-45-67</strong></div>
+      <div class="footer-contact-item"><strong>+380 (67) 987-65-43</strong></div>
+      <div class="footer-contact-item" style="margin-top:.5rem">info@dvepro.ua</div>
+      <div class="footer-contact-item" style="margin-top:.5rem">вул. Хрещатик, 22<br>м. Київ</div>
+      <button class="btn-primary" style="margin-top:1rem;font-size:.75rem;padding:.6rem 1.2rem" onclick="openModal()">Замовити заміри</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 ДвеПро. Всі права захищено.</div>
+    <div class="footer-dev">Ліцензія ДСНС | ISO 9001:2015 | ДСТУ Б.В.1.1-24</div>
+  </div>
+</footer>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active', a.dataset.page===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('navLinks').classList.remove('open');
+}
+function toggleBurger(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+function openModal(){
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('modalForm').style.display='block';
+  document.getElementById('modalSuccess').style.display='none';
+  document.body.style.overflow='hidden';
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeModalOut(e){if(e.target===document.getElementById('modal'))closeModal();}
+function submitModal(){
+  const name=document.getElementById('m-name').value.trim();
+  const phone=document.getElementById('m-phone').value.trim();
+  if(!name||!phone){alert('Будь ласка, вкажіть ім\'я та телефон');return;}
+  document.getElementById('modalForm').style.display='none';
+  document.getElementById('modalSuccess').style.display='block';
+  setTimeout(closeModal,4000);
+}
+function submitContactForm(){
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  if(!name||!phone){alert('Будь ласка, вкажіть ім\'я та телефон');return;}
+  document.getElementById('contactFormWrap').style.display='none';
+  document.getElementById('contactSuccess').style.display='block';
+}
+</script>
+</body>
+</html>
